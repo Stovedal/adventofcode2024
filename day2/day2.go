@@ -1,6 +1,7 @@
 package day2
 
 import (
+	"adventofcode2024/utils"
 	"math"
 	"strconv"
 	"strings"
@@ -61,7 +62,7 @@ func isReportSafe(report []int) bool {
 	for i := 1; i < len(report); i++ {
 		diff := report[i-1] - report[i]
 
-		isGraduallyAscendingOrDescending := int(math.Abs(float64(diff))) == 1 || int(math.Abs(float64(diff))) == 2 || int(math.Abs(float64(diff))) == 3
+		isGraduallyAscendingOrDescending := utils.ArrayContains([]int{1, 2, 3}, int(math.Abs(float64(diff))))
 		isContinouslyAscendingOrDescending := report[0]-report[1] > 0 && diff > 0 || report[0]-report[1] < 0 && diff < 0
 
 		if !isGraduallyAscendingOrDescending || !isContinouslyAscendingOrDescending {

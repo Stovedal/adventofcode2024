@@ -27,3 +27,13 @@ func MatrixEquals(a, b [][]int) bool {
 
 	return true
 }
+
+func ArrayContains(a []int, value int) bool {
+	for _, element := range a {
+		if element == value {
+			return true
+		}
+	}
+
+	return false
+}
