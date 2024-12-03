@@ -39,18 +39,18 @@ func FormatInput(input string) [][]int {
 }
 
 func Task1(input string) int {
-	return CountSafeReports(FormatInput(input))
+	return CountSafeReports(FormatInput(input), false)
 }
 
 func Task2(input string) int {
-	return 0
+	return CountSafeReports(FormatInput(input), true)
 }
 
-func CountSafeReports(reports [][]int) int {
+func CountSafeReports(reports [][]int, dampenProblems bool) int {
 	safeReportCount := 0
 
 	for _, report := range reports {
-		if isReportSafe(report) {
+		if isReportSafe(report, dampenProblems) {
 			safeReportCount++
 		}
 	}
@@ -58,7 +58,7 @@ func CountSafeReports(reports [][]int) int {
 	return safeReportCount
 }
 
-func isReportSafe(report []int) bool {
+func isReportSafe(report []int, dampenProblems bool) bool {
 	if len(report) < 2 {
 		panic("Report is too short")
 	}

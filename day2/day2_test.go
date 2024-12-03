@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestFormatInput(t *testing.T) {
+func Test_format_input(t *testing.T) {
 	input := "7 6 4 2 1\n1 2 7 8 9\n9 7 6 2 1 4 5 2\n1 3 2 4 5\n8 6 4 4 1\n1 3 6 7 9\n"
 
 	result := FormatInput(input)
@@ -17,91 +17,211 @@ func TestFormatInput(t *testing.T) {
 	}
 }
 
-func TestDecreasingValuesAreConsideredSafe(t *testing.T) {
+func Test_decreasing_values_are_considered_safe(t *testing.T) {
 	input := [][]int{{7, 6, 4, 2, 1}}
 
 	expected := 1
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestIncreasingValuesAreConsideredSafe(t *testing.T) {
+func Test_increasing_values_are_considered_safe(t *testing.T) {
 	input := [][]int{{1, 3, 5, 6, 8}}
 
 	expected := 1
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestAlternatingDecreasingAndIncreasingValuesAreConsideredUnsafe(t *testing.T) {
+func Test_alternating_decreasing_and_increasing_values_are_considered_unsafe(t *testing.T) {
 	input := [][]int{{1, 3, 2, 6, 9}}
 
 	expected := 0
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestTooSlowlyDecreasingValuesAreConsideredUnsafe(t *testing.T) {
+func Test_too_slowly_decreasing_values_are_considered_unsafe(t *testing.T) {
 	input := [][]int{{7, 8, 8, 6, 5}}
 
 	expected := 0
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestTooSlowlyIncreasingValuesAreConsideredUnsafe(t *testing.T) {
+func Test_too_slowly_increasing_value_sare_considered_unsafe(t *testing.T) {
 	input := [][]int{{1, 3, 3, 6, 9}}
 
 	expected := 0
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestTooRapidlyDecreasingValuesAreConsideredUnsafe(t *testing.T) {
+func Test_too_rapidly_decreasing_values_are_considered_unsafe(t *testing.T) {
 	input := [][]int{{11, 8, 3, 2, 1}}
 
 	expected := 0
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestTooRapidlyIncreasingValuesAreConsideredUnsage(t *testing.T) {
+func Test_too_rapidly_increasing_values_are_considered_unsafe(t *testing.T) {
 	input := [][]int{{1, 3, 4, 10, 11}}
 
 	expected := 0
 
-	result := CountSafeReports(input)
+	result := CountSafeReports(input, false)
 
 	if result != expected {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
 
-func TestPanicsOnTooShortReport(t *testing.T) {
+func Test_too_rapidly_increasing_values__once_are_considered_safe_when_dampened(t *testing.T) {
+	input := [][]int{{1, 3, 4, 10, 11}}
+
+	expected := 1
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_alternating_decreasing_and_increasing_values_once_are_considered_safe_when_dampened(t *testing.T) {
+	input := [][]int{{1, 3, 2, 6, 9}}
+
+	expected := 1
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func TestTooSlowlyDecreasingValues_once_are_considered_safe_when_dampened(t *testing.T) {
+	input := [][]int{{7, 8, 8, 6, 5}}
+
+	expected := 1
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_too_slowly_increasing_values_once_are_considered_safe_when_dampened(t *testing.T) {
+	input := [][]int{{1, 3, 3, 6, 9}}
+
+	expected := 1
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_too_rapidly_decreasing_values_once_are_considered_safe_when_dampened(t *testing.T) {
+	input := [][]int{{11, 8, 3, 2, 1}}
+
+	expected := 1
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_too_rapidly_increasing_values_Twiceare_considered_unsafe_when_dampened(t *testing.T) {
+	input := [][]int{{1, 3, 4, 10, 16}}
+
+	expected := 0
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_alternating_decreasing_and_increasing_values_twice_are_considered_unsafe_when_dampened(t *testing.T) {
+	input := [][]int{{1, 3, 2, 6, 5, 6}}
+
+	expected := 0
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_too_slowly_decreasing_values_twice_are_considered_unsafe_when_dampened(t *testing.T) {
+	input := [][]int{{7, 8, 8, 6, 6}}
+
+	expected := 0
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_too_slowly_increasing_values_twice_are_considered_unsafe_when_dampened(t *testing.T) {
+	input := [][]int{{1, 3, 3, 6, 6}}
+
+	expected := 0
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_too_rapidly_decreasing_values_twice_are_considered_unsafe_when_dampened(t *testing.T) {
+	input := [][]int{{18, 8, 3, 2, 1}}
+
+	expected := 0
+
+	result := CountSafeReports(input, true)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
+
+func Test_panics_on_too_short_report(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("The code did not panic")
@@ -110,10 +230,10 @@ func TestPanicsOnTooShortReport(t *testing.T) {
 
 	input := [][]int{{1}}
 
-	CountSafeReports(input)
+	CountSafeReports(input, false)
 }
 
-func TestTask1Integration(t *testing.T) {
+func Test_task1_integration(t *testing.T) {
 	input := "7 6 4 2 1\n1 2 7 8 9\n9 7 6 2 1\n1 3 2 4 5\n8 6 4 4 1\n1 3 6 7 9"
 
 	expected := 2
