@@ -9,27 +9,31 @@ import (
 
 func FormatInput(input string) [][]int {
 	rows := strings.Split(input, "\n")
-	output := make([][]int, len(rows))
 
-	for i, row := range rows {
+	output := [][]int{}
+
+	for _, row := range rows {
 		if row == "" {
 			continue
 		}
 
+		output = append(output, []int{})
+
 		columns := strings.Split(row, " ")
 
-		output[i] = make([]int, len(columns))
+		for _, column := range columns {
 
-		for j, column := range columns {
 			value, err := strconv.Atoi(column)
 
 			if err != nil {
 				panic("Could not convert column to int")
 			}
 
-			output[i][j] = value
+			output[len(output)-1] = append(output[len(output)-1], value)
+
 		}
 	}
+	println("%v", output)
 
 	return output
 }
@@ -56,7 +60,7 @@ func CountSafeReports(reports [][]int) int {
 
 func isReportSafe(report []int) bool {
 	if len(report) < 2 {
-		return true
+		panic("Report is too short")
 	}
 
 	for i := 1; i < len(report); i++ {
