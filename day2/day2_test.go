@@ -244,3 +244,15 @@ func Test_task1_integration(t *testing.T) {
 		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
 	}
 }
+
+func Test_task2_integration(t *testing.T) {
+	input := "7 6 4 2 1\n1 2 7 8 9\n9 7 6 2 1\n1 3 2 4 5\n8 6 4 4 1\n1 3 6 7 9"
+
+	expected := 4
+
+	result := Task2(input)
+
+	if result != expected {
+		t.Errorf("Test input %v, resulted in %v instead of %v", input, result, expected)
+	}
+}
