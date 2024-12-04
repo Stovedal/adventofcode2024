@@ -102,7 +102,7 @@ func Test_too_rapidly_increasing_values_are_considered_unsafe(t *testing.T) {
 }
 
 func Test_too_rapidly_increasing_values__once_are_considered_safe_when_dampened(t *testing.T) {
-	input := [][]int{{1, 3, 4, 10, 11}}
+	input := [][]int{{1, 3, 4, 6, 11}}
 
 	expected := 1
 
@@ -125,8 +125,8 @@ func Test_alternating_decreasing_and_increasing_values_once_are_considered_safe_
 	}
 }
 
-func TestTooSlowlyDecreasingValues_once_are_considered_safe_when_dampened(t *testing.T) {
-	input := [][]int{{7, 8, 8, 6, 5}}
+func Test_too_slowly_decreasing_values_once_are_considered_safe_when_dampened(t *testing.T) {
+	input := [][]int{{7, 6, 5, 5, 4}}
 
 	expected := 1
 
@@ -150,7 +150,7 @@ func Test_too_slowly_increasing_values_once_are_considered_safe_when_dampened(t 
 }
 
 func Test_too_rapidly_decreasing_values_once_are_considered_safe_when_dampened(t *testing.T) {
-	input := [][]int{{11, 8, 3, 2, 1}}
+	input := [][]int{{11, 4, 3, 2, 1}}
 
 	expected := 1
 
@@ -161,7 +161,7 @@ func Test_too_rapidly_decreasing_values_once_are_considered_safe_when_dampened(t
 	}
 }
 
-func Test_too_rapidly_increasing_values_Twiceare_considered_unsafe_when_dampened(t *testing.T) {
+func Test_too_rapidly_increasing_values_twice_are_considered_unsafe_when_dampened(t *testing.T) {
 	input := [][]int{{1, 3, 4, 10, 16}}
 
 	expected := 0

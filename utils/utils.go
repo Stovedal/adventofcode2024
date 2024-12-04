@@ -37,3 +37,12 @@ func ArrayContains(a []int, value int) bool {
 
 	return false
 }
+
+func ArrayRemoveElementAt(a []int, index int) []int {
+	result := make([]int, len(a)-1)
+
+	copy(result, a[:index])
+	copy(result[index:], a[index+1:])
+
+	return result
+}

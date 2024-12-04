@@ -70,7 +70,11 @@ func isReportSafe(report []int, dampenProblems bool) bool {
 		isContinouslyAscendingOrDescending := report[0]-report[1] > 0 && diff > 0 || report[0]-report[1] < 0 && diff < 0
 
 		if !isGraduallyAscendingOrDescending || !isContinouslyAscendingOrDescending {
-			return false
+			if dampenProblems {
+				return isReportSafe(utils.ArrayRemoveElementAt(report, i-1), false) || isReportSafe(utils.ArrayRemoveElementAt(report, i), false)
+			} else {
+				return false
+			}
 		}
 	}
 
