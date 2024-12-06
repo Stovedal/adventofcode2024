@@ -46,10 +46,19 @@ func FormatInput(input string) []Instruction {
 
 func ExecuteInstructions(instructions []Instruction, withEnabledState bool) int {
 	result := 0
+	enabled := true
 
 	for _, instruction := range instructions {
-		if instruction.operation == "mul" {
+		if instruction.operation == "mul" && enabled {
 			result += instruction.arguments[0] * instruction.arguments[1]
+		}
+
+		if withEnabledState {
+			if instruction.operation == "do" {
+				enabled = true
+			} else if instruction.operation == "don't" {
+				enabled = false
+			}
 		}
 	}
 
