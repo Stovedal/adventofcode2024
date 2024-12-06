@@ -44,7 +44,7 @@ func FormatInput(input string) []Instruction {
 	return instructions
 }
 
-func ExecuteInstructions(instructions []Instruction) int {
+func ExecuteInstructions(instructions []Instruction, withEnabledState bool) int {
 	result := 0
 
 	for _, instruction := range instructions {
@@ -57,9 +57,9 @@ func ExecuteInstructions(instructions []Instruction) int {
 }
 
 func Task1(input string) int {
-	return ExecuteInstructions(FormatInput(input))
+	return ExecuteInstructions(FormatInput(input), false)
 }
 
 func Task2(input string) int {
-	return 0
+	return ExecuteInstructions(FormatInput(input), true)
 }
