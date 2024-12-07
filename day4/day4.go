@@ -55,7 +55,6 @@ func CountXmasesInMatrix(matrix [][]string) int {
 }
 
 func CountWordsInMatrix(word string, matrix [][]string) int {
-
 	count := 0
 
 	for _, horizontalLine := range matrix {
@@ -72,21 +71,27 @@ func CountWordsInMatrix(word string, matrix [][]string) int {
 		count += countWordsInLine(word, verticalLine)
 	}
 
-	for k := -len(matrix[0]); k < len(matrix[0]); k++ {
+	yMax := len(matrix)
+	xMax := len(matrix[0])
+
+	for i := -xMax; i < xMax; i++ {
 		diagonalLineLtr := []string{}
 		diagonalLineRtl := []string{}
 
-		for y := 0; y < len(matrix); y++ {
-			if y+k < len(matrix[0]) && y+k >= 0 {
-				value := matrix[y][y+k]
+		for y := 0; y < yMax; y++ {
+			rtlX := y + i
+
+			if rtlX >= 0 && rtlX < xMax {
+				value := matrix[y][rtlX]
 				diagonalLineLtr = append(diagonalLineLtr, value)
 			}
 
-			if (len(matrix[0])-1)-y-k >= 0 && (len(matrix[0])-1)-y-k < len(matrix[0]) {
-				value := matrix[y][(len(matrix[0])-1)-y-k]
+			ltrX := (xMax - 1) - rtlX
+
+			if ltrX >= 0 && ltrX < xMax {
+				value := matrix[y][ltrX]
 				diagonalLineRtl = append(diagonalLineRtl, value)
 			}
-
 		}
 
 		count += countWordsInLine(word, diagonalLineLtr)
