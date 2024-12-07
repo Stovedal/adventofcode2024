@@ -5,6 +5,7 @@ import (
 	"adventofcode2024/day2"
 	"adventofcode2024/day3"
 	"adventofcode2024/day4"
+	"adventofcode2024/day5"
 	"adventofcode2024/input"
 	"adventofcode2024/utils"
 	"fmt"
@@ -21,6 +22,7 @@ func main() {
 		2: {Task1: day2.Task1, Task2: day2.Task2},
 		3: {Task1: day3.Task1, Task2: day3.Task2},
 		4: {Task1: day4.Task1, Task2: day4.Task2},
+		5: {Task1: day5.Task1, Task2: day5.Task2},
 	}
 
 	solutionIdentifier, sessionToken := utils.ParseUserArguments(len(solutions))
