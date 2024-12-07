@@ -5,6 +5,14 @@ import (
 	"strings"
 )
 
+func Task1(input string) int {
+	return CountWordsInMatrix("XMAS", FormatInput(input))
+}
+
+func Task2(input string) int {
+	return CountXmasesInMatrix(FormatInput(input))
+}
+
 func FormatInput(input string) [][]string {
 	output := [][]string{}
 
@@ -19,47 +27,30 @@ func FormatInput(input string) [][]string {
 	return output
 }
 
-func CountXmasesInMatrix(matrix [][]string) int {
+func CountWordsInMatrix(word string, matrix [][]string) int {
 	count := 0
 
-	for y := 1; y < len(matrix[0])-1; y++ {
-		for x := 1; x < len(matrix)-1; x++ {
-			if matrix[x][y] == "A" {
-				corners := []string{
-					matrix[x-1][y-1],
-					matrix[x+1][y+1],
-					matrix[x+1][y-1],
-					matrix[x-1][y+1],
-				}
+	count += countHorizontalWordsInMatrix(word, matrix)
 
-				sCount := 0
-				mCount := 0
+	count += countVerticalWordsInMatrix(word, matrix)
 
-				for _, corner := range corners {
-					if corner == "S" {
-						sCount++
-					} else if corner == "M" {
-						mCount++
-					}
-				}
-
-				if sCount == 2 && mCount == 2 {
-					count++
-				}
-
-			}
-		}
-	}
+	count += countDiagonalWordsInMatrix(word, matrix)
 
 	return count
 }
 
-func CountWordsInMatrix(word string, matrix [][]string) int {
+func countHorizontalWordsInMatrix(word string, matrix [][]string) int {
 	count := 0
 
 	for _, horizontalLine := range matrix {
 		count += countWordsInLine(word, horizontalLine)
 	}
+
+	return count
+}
+
+func countVerticalWordsInMatrix(word string, matrix [][]string) int {
+	count := 0
 
 	for i := 0; i < len(matrix[0]); i++ {
 		verticalLine := []string{}
@@ -70,6 +61,12 @@ func CountWordsInMatrix(word string, matrix [][]string) int {
 
 		count += countWordsInLine(word, verticalLine)
 	}
+
+	return count
+}
+
+func countDiagonalWordsInMatrix(word string, matrix [][]string) int {
+	count := 0
 
 	yMax := len(matrix)
 	xMax := len(matrix[0])
@@ -123,10 +120,37 @@ func reverseString(s string) string {
 	return strings.Join(output, "")
 }
 
-func Task1(input string) int {
-	return CountWordsInMatrix("XMAS", FormatInput(input))
-}
+func CountXmasesInMatrix(matrix [][]string) int {
+	count := 0
 
-func Task2(input string) int {
-	return CountXmasesInMatrix(FormatInput(input))
+	for y := 1; y < len(matrix[0])-1; y++ {
+		for x := 1; x < len(matrix)-1; x++ {
+			if matrix[x][y] == "A" {
+				corners := []string{
+					matrix[x-1][y-1],
+					matrix[x+1][y+1],
+					matrix[x+1][y-1],
+					matrix[x-1][y+1],
+				}
+
+				sCount := 0
+				mCount := 0
+
+				for _, corner := range corners {
+					if corner == "S" {
+						sCount++
+					} else if corner == "M" {
+						mCount++
+					}
+				}
+
+				if sCount == 2 && mCount == 2 {
+					count++
+				}
+
+			}
+		}
+	}
+
+	return count
 }
